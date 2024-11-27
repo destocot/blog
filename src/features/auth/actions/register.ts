@@ -22,7 +22,7 @@ export const register = validatedAction(RegisterSchema, async (data) => {
   const name = generateName(email)
 
   const newUser = await prisma.user.create({
-    data: { email, passwordHash, name },
+    data: { email: email.toUpperCase(), passwordHash, name },
     select: { userId: true, role: true },
   })
 

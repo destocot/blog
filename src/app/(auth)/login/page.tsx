@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 export default function Page() {
   return (
-    <Card className='md:dark:shadow-dark-sm mx-auto border-0 shadow-none md:max-w-[480px] md:border md:shadow-sm'>
+    <Card className='mx-auto border-0 shadow-none md:max-w-[480px] md:border md:shadow-sm md:dark:shadow-dark-sm'>
       <CardHeader>
         <CardTitle className='text-3xl font-bold'>Login</CardTitle>
       </CardHeader>
