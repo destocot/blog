@@ -49,7 +49,7 @@ export async function generateStaticParams() {
   const posts = await prisma.post.findMany({
     select: { postId: true },
     orderBy: { createdAt: 'desc' },
-    take: POSTS_PER_PAGE * 2,
+    take: POSTS_PER_PAGE,
   })
 
   const staticParams = posts.map((post) => ({
