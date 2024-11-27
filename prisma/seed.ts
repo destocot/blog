@@ -49,6 +49,7 @@ async function main() {
   await prisma.user.create({
     data: {
       ...user,
+      email: user.email.toUpperCase(),
       posts: {
         createMany: {
           data: Array.from({ length: 48 }).map(() => ({
@@ -65,7 +66,7 @@ async function main() {
 
   const users = await prisma.user.createManyAndReturn({
     data: Array.from({ length: 10 }).map(() => ({
-      email: faker.internet.email(),
+      email: faker.internet.email().toUpperCase(),
       name: faker.internet.username(),
       passwordHash,
     })),
