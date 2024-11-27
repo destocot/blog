@@ -1,0 +1,57 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["typedSql", "driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  userId    String   @id @default(cuid()) @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name         String
+  email        String @unique
+  passwordHash String @map("password_hash")
+  role         String @default("USER")
+
+  posts    Post[]
+  comments Comment[]
+
+  @@map("users")
+}
+
+model Post {
+  postId    String   @id @default(cuid()) @map("post_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title   String
+  content String
+  image   String?
+
+  author   User      @relation(fields: [authorId], references: [userId], onDelete: Cascade)
+  authorId String    @map("author_id")
+  comments Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  commentId String   @id @default(cuid()) @map("comment_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  content String
+
+  post   Post   @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  postId String @map("post_id")
+
+  author   User   @relation(fields: [authorId], references: [userId], onDelete: Cascade)
+  authorId String @map("author_id")
+
+  @@map("comments")
+}
